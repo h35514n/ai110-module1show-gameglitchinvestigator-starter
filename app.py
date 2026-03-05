@@ -6,12 +6,12 @@ def get_range_for_difficulty(difficulty: str):
         return 1, 20
     if difficulty == "Normal":
         return 1, 100
-    if difficulty == "Hard":
+    if difficulty == "Hard": # FIXME: L9-10
         return 1, 50
     return 1, 100
 
 
-def parse_guess(raw: str):
+def parse_guess(raw: str): # FIXME: L14-29
     if raw is None:
         return False, None, "Enter a guess."
 
@@ -34,7 +34,7 @@ def check_guess(guess, secret):
         return "Win", "🎉 Correct!"
 
     try:
-        if guess > secret:
+        if guess > secret:  # FIXME: L37-47
             return "Too High", "📈 Go HIGHER!"
         else:
             return "Too Low", "📉 Go LOWER!"
@@ -118,7 +118,7 @@ with st.expander("Developer Debug Info"):
     st.write("Difficulty:", difficulty)
     st.write("History:", st.session_state.history)
 
-raw_guess = st.text_input(
+raw_guess = st.text_input( # FIXME: L121-128
     "Enter your guess:",
     key=f"guess_input_{difficulty}"
 )
@@ -131,13 +131,13 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
-if new_game:
+if new_game: # FIXME: L134-138
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.secret = random.randint(1, 100) # FIXME: L136
     st.success("New game started.")
     st.rerun()
 
-if st.session_state.status != "playing":
+if st.session_state.status != "playing": # FIXME: L140-145
     if st.session_state.status == "won":
         st.success("You already won. Start a new game to play again.")
     else:
@@ -155,7 +155,7 @@ if submit:
     else:
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
+        if st.session_state.attempts % 2 == 0: # FIXME: L158-163
             secret = str(st.session_state.secret)
         else:
             secret = st.session_state.secret
