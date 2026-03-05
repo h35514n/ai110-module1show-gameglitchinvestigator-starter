@@ -43,6 +43,12 @@ if "status" not in st.session_state:
 if "history" not in st.session_state:
     st.session_state.history = []
 
+if "guess_count" not in st.session_state:
+    st.session_state.guess_count = 0
+
+if "last_hint" not in st.session_state:
+    st.session_state.last_hint = None
+
 st.subheader("Make a guess")
 
 st.info(
@@ -63,7 +69,7 @@ with st.form("guess_form"):
         min_value=low,
         max_value=high,
         step=1,
-        key=f"guess_input_{difficulty}"
+        key=f"guess_input_{difficulty}_{st.session_state.guess_count}"
     )
     submit = st.form_submit_button("Submit Guess 🚀")
 
@@ -73,12 +79,17 @@ with col1:
 with col2:
     show_hint = st.checkbox("Show hint", value=True)
 
+if show_hint and st.session_state.last_hint:
+    st.warning(st.session_state.last_hint)
+
 if new_game:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(low, high)
     st.session_state.status = "playing"
     st.session_state.history = []
     st.session_state.score = 0
+    st.session_state.guess_count = 0
+    st.session_state.last_hint = None
     st.success("New game started.")
     st.rerun()
 
@@ -91,6 +102,7 @@ if st.session_state.status != "playing":
 
 if submit:
     st.session_state.attempts += 1
+    st.session_state.guess_count += 1
 
     ok, guess_int, err = parse_guess(str(raw_guess), low=low, high=high)
 
@@ -103,7 +115,7 @@ if submit:
         outcome, message = check_guess(guess_int, st.session_state.secret)
 
         if show_hint:
-            st.warning(message)
+            st.session_state.last_hint = message
 
         st.session_state.score = update_score(
             current_score=st.session_state.score,
@@ -126,6 +138,8 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+            else:
+                st.rerun()
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
