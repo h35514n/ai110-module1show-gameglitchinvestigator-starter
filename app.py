@@ -3,6 +3,16 @@ import streamlit as st
 
 from logic_utils import check_guess, get_range_for_difficulty, parse_guess, update_score
 
+
+def reset_game(low: int, high: int):
+    st.session_state.secret = random.randint(low, high)
+    st.session_state.attempts = 0
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.score = 0
+    st.session_state.guess_count = 0
+    st.session_state.last_hint = None
+
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
 
 st.title("🎮 Game Glitch Investigator")
@@ -54,13 +64,7 @@ if "difficulty" not in st.session_state:
 
 if st.session_state.difficulty != difficulty:
     st.session_state.difficulty = difficulty
-    st.session_state.secret = random.randint(low, high)
-    st.session_state.attempts = 0
-    st.session_state.status = "playing"
-    st.session_state.history = []
-    st.session_state.score = 0
-    st.session_state.guess_count = 0
-    st.session_state.last_hint = None
+    reset_game(low, high)
 
 st.subheader("Make a guess")
 
@@ -96,13 +100,7 @@ if show_hint and st.session_state.last_hint:
     st.warning(st.session_state.last_hint)
 
 if new_game:
-    st.session_state.attempts = 0
-    st.session_state.secret = random.randint(low, high)
-    st.session_state.status = "playing"
-    st.session_state.history = []
-    st.session_state.score = 0
-    st.session_state.guess_count = 0
-    st.session_state.last_hint = None
+    reset_game(low, high)
     st.success("New game started.")
     st.rerun()
 
