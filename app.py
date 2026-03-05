@@ -73,13 +73,16 @@ with col1:
 with col2:
     show_hint = st.checkbox("Show hint", value=True)
 
-if new_game: # FIXME: L134-138
+if new_game:
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100) # FIXME: L136
+    st.session_state.secret = random.randint(low, high)
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.score = 0
     st.success("New game started.")
     st.rerun()
 
-if st.session_state.status != "playing": # FIXME: L140-145
+if st.session_state.status != "playing":
     if st.session_state.status == "won":
         st.success("You already won. Start a new game to play again.")
     else:
