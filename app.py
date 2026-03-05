@@ -119,8 +119,11 @@ with st.expander("Developer Debug Info"):
     st.write("History:", st.session_state.history)
 
 with st.form("guess_form"):
-    raw_guess = st.text_input(
+    raw_guess = st.number_input(
         "Enter your guess:",
+        min_value=1,
+        max_value=100,
+        step=1,
         key=f"guess_input_{difficulty}"
     )
     submit = st.form_submit_button("Submit Guess 🚀")
@@ -147,7 +150,7 @@ if st.session_state.status != "playing": # FIXME: L140-145
 if submit:
     st.session_state.attempts += 1
 
-    ok, guess_int, err = parse_guess(raw_guess)
+    ok, guess_int, err = parse_guess(str(raw_guess))
 
     if not ok:
         st.session_state.history.append(raw_guess)
