@@ -196,3 +196,19 @@ tighter leash when working on application code, legacy code, code that's
 dependency-heavy. I haven't yet done any full agentic coding, but this has left
 me curious to know how context is effectively tailored to enable agents to run
 more independently.
+
+## Advanced Edge Case Testing Results
+
+```
+game_glitch_investigator main % pytest
+
+================================================================ test session starts =================================================================
+platform darwin -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0
+rootdir: /Users/jmromer/Projects/codepath/ai110/week01/game_glitch_investigator
+collected 35 items
+
+test_logic_utils.py ........................                                                                                                   [ 68%]
+tests/test_game_logic.py ...........                                                                                                           [100%]
+
+================================================================= 35 passed in 0.02s =================================================================
+```
