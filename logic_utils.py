@@ -4,8 +4,8 @@ def get_range_for_difficulty(difficulty: str):
         return 1, 20
     if difficulty == "Normal":
         return 1, 100
-    if difficulty == "Hard": # FIXME: L9-10
-        return 1, 50
+    if difficulty == "Hard":
+        return 1, 200
     return 1, 100
 
 

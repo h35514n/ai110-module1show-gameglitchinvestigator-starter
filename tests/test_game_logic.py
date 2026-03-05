@@ -1,4 +1,10 @@
-from logic_utils import check_guess, parse_guess
+from logic_utils import check_guess, get_range_for_difficulty, parse_guess
+
+def test_hard_range_is_harder_than_normal():
+    # Bonus bug regression: Hard range was (1, 50), smaller than Normal's (1, 100)
+    _, normal_high = get_range_for_difficulty("Normal")
+    _, hard_high = get_range_for_difficulty("Hard")
+    assert hard_high > normal_high
 
 def test_winning_guess():
     # If the secret is 50 and guess is 50, it should be a win

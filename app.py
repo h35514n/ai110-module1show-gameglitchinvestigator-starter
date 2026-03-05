@@ -46,7 +46,7 @@ if "history" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
-    f"Guess a number between 1 and 100. "
+    f"Guess a number between {low} and {high}. "
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
@@ -60,8 +60,8 @@ with st.expander("Developer Debug Info"):
 with st.form("guess_form"):
     raw_guess = st.number_input(
         "Enter your guess:",
-        min_value=1,
-        max_value=100,
+        min_value=low,
+        max_value=high,
         step=1,
         key=f"guess_input_{difficulty}"
     )
