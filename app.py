@@ -49,6 +49,19 @@ if "guess_count" not in st.session_state:
 if "last_hint" not in st.session_state:
     st.session_state.last_hint = None
 
+if "difficulty" not in st.session_state:
+    st.session_state.difficulty = difficulty
+
+if st.session_state.difficulty != difficulty:
+    st.session_state.difficulty = difficulty
+    st.session_state.secret = random.randint(low, high)
+    st.session_state.attempts = 0
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.score = 0
+    st.session_state.guess_count = 0
+    st.session_state.last_hint = None
+
 st.subheader("Make a guess")
 
 st.info(
